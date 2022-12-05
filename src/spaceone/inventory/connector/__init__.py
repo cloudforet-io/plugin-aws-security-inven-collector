@@ -1,0 +1,3 @@
+from spaceone.inventory.connector.cloudtrail import CloudTrailConnector
+from spaceone.inventory.connector.cloudtrail import S3Connector
+from spaceone.inventory.connector.iam_credential_report import IAMCredentialReportConnector
