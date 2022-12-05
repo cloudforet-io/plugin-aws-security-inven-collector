@@ -6,7 +6,7 @@ FILTER_FORMAT = []
 DEFAULT_REGION = 'us-east-1'
 
 CLOUD_SERVICE_MANAGERS = [
-    # 'IAMCredentialReportManager',
+    'IAMCredentialReportManager',
     'CloudTrailManager'
 ]
 
