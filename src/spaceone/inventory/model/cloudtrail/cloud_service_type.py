@@ -15,8 +15,6 @@ cst_trail.name = 'EventLogging'
 cst_trail.group = 'Compliance'
 cst_trail.provider = 'aws'
 cst_trail.labels = ['Security']
-cst_trail.is_major = True
-cst_trail.is_primary = True
 cst_trail.tags = {
     'spaceone:icon': 'https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-cloudtrail.svg',
     'spaceone:display_name': 'EventLogging'
