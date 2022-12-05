@@ -191,10 +191,14 @@ class IAMCredentialReportManager(AWSManager):
             if access_key_1_active == 'true':
                 access_key_1_last_rotated = iam_cred.get('access_key_1_last_rotated')
                 report = self._check_access_key(access_key_1_last_rotated, now, report)
+            else:
+                report.update({'status': 'PASS'})
 
             if access_key_2_active == 'true':
                 access_key_2_last_rotated = iam_cred.get('access_key_2_last_rotated')
                 report = self._check_access_key(access_key_2_last_rotated, now, report)
+            else:
+                report.update({'status': 'PASS'})
 
         return report
 
