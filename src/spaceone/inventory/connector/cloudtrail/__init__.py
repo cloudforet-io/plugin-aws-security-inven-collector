@@ -1,0 +1,2 @@
+from spaceone.inventory.connector.cloudtrail.cloudtrail_connector import CloudTrailConnector
+from spaceone.inventory.connector.cloudtrail.s3_connector import S3Connector

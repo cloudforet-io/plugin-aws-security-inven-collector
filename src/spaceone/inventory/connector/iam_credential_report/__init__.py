@@ -1,0 +1,1 @@
+from spaceone.inventory.connector.iam_credential_report.connector import IAMCredentialReportConnector
