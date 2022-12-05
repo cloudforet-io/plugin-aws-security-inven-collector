@@ -43,7 +43,6 @@ class CloudTrailManager(AWSManager):
 
         for trail in trail_conn.describe_trails():
             try:
-                self.check_compliance(trail)
                 trail_name = trail.get('Name')
                 s3_bucket_name = trail.get('S3BucketName')
 
@@ -60,6 +59,8 @@ class CloudTrailManager(AWSManager):
 
                 if policy_status_info.get('IsPublic'):
                     trail.update({'s3_bucket_public': True})
+
+                self.check_compliance(trail)
 
                 trail_data = Trail(trail, strict=False)
                 trail_resource = TrailResource({
@@ -109,7 +110,7 @@ class CloudTrailManager(AWSManager):
             'fail_reason': ''
         }
 
-        if trail.get('is_multi_region_trail'):
+        if trail.get('IsMultiRegionTrail'):
             report.update({'status': 'PASS'})
         else:
             report.update({'fail_reason': 'Cloud Trail Multi Region setting must be enabled.'})
@@ -124,7 +125,7 @@ class CloudTrailManager(AWSManager):
             'fail_reason': ''
         }
 
-        if trail.get('log_file_validation_enabled'):
+        if trail.get('LogFileValidationEnabled'):
             report.update({'status': 'PASS'})
         else:
             report.update({'fail_reason': 'Log file validation setting must be enabled.'})
