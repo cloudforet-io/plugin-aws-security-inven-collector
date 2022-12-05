@@ -1,8 +1,8 @@
-from schematics.types import ModelType, StringType, PolyModelType, FloatType, DateTimeType
+from schematics.types import ModelType, StringType, PolyModelType
 
 from spaceone.inventory.model.cloudtrail.data import Trail
 from spaceone.inventory.libs.schema.metadata.dynamic_field import TextDyField, EnumDyField
-from spaceone.inventory.libs.schema.metadata.dynamic_layout import ItemDynamicLayout, SimpleTableDynamicLayout
+from spaceone.inventory.libs.schema.metadata.dynamic_layout import ItemDynamicLayout, TableDynamicLayout
 from spaceone.inventory.libs.schema.cloud_service import CloudServiceResource, CloudServiceResponse, CloudServiceMeta
 
 
@@ -38,7 +38,15 @@ meta_base = ItemDynamicLayout.set_fields('Trails', fields=[
     })
 ])
 
-metadata = CloudServiceMeta.set_layouts([meta_base])
+compliance_rules_meta = TableDynamicLayout.set_fields('Rules', 'data.rules', fields=[
+    TextDyField.data_source('Rule Name', 'name'),
+    EnumDyField.data_source('Status', 'status', default_badge={
+        'indigo.500': ['PASS'], 'coral.600': ['FAILED']
+    }),
+    TextDyField.data_source('Fail Reason', 'fail_reason')
+])
+
+metadata = CloudServiceMeta.set_layouts([meta_base, compliance_rules_meta])
 
 
 class CloudTrailResource(CloudServiceResource):
