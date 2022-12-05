@@ -6,11 +6,16 @@ from spaceone.inventory.libs.schema.resource import AWSCloudService
 _LOGGER = logging.getLogger(__name__)
 
 
-'''
-TRAIL
-'''
+class SecurityCheckRule(Model):
+    name = StringType(default='')
+    status = StringType(choices=('PASS', 'FAILED'))
+    fail_reason = StringType(default='')
+
+
 class Trail(AWSCloudService):
     name = StringType(deserialize_from="Name", serialize_when_none=False)
+    status = StringType(choices=('PASS', 'FAILED'))
+    rules = ListType(ModelType(SecurityCheckRule), default=[])
     s3_bucket_name = StringType(deserialize_from="S3BucketName", serialize_when_none=False)
     s3_key_prefix = StringType(deserialize_from="S3KeyPrefix", serialize_when_none=False)
     sns_topic_name = StringType(deserialize_from="SnsTopicName", serialize_when_none=False)

@@ -54,7 +54,7 @@ class ComputeResource(CloudServiceResource):
 
 
 class IAMCredentialResource(ComputeResource):
-    cloud_service_type = StringType(default='RootUserSecurity')
+    cloud_service_type = StringType(default='UserSecurity')
     data = ModelType(IAMCredential)
     _metadata = ModelType(CloudServiceMeta, default=iam_cred_meta, serialized_name='metadata')
     name = StringType()
