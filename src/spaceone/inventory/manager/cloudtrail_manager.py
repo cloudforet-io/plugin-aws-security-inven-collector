@@ -43,6 +43,7 @@ class CloudTrailManager(AWSManager):
 
         for trail in trail_conn.describe_trails():
             try:
+                self.check_compliance(trail)
                 trail_name = trail.get('Name')
                 s3_bucket_name = trail.get('S3BucketName')
 
@@ -78,3 +79,100 @@ class CloudTrailManager(AWSManager):
 
         _LOGGER.debug(f'** Cloud Trail Finished {time.time() - start_time} Seconds **')
         return trail_responses, error_responses
+
+    def check_compliance(self, trail):
+        total_compliance_status = 'PASS'
+
+        rules = [
+            self.check_multi_region(trail),
+            self.check_log_file_validation(trail),
+            self.check_s3_bucket_access(trail),
+            self.check_s3_bucket_mfa_delete(trail),
+            self.check_s3_bucket_encryption(trail)
+        ]
+
+        for rule in rules:
+            if rule.get('status') != 'PASS':
+                total_compliance_status = 'FAILED'
+                break
+
+        trail.update({
+            'status': total_compliance_status,
+            'rules': rules
+        })
+
+    @staticmethod
+    def check_multi_region(trail):
+        report = {
+            'name': 'Multi Region Trail Enabled',
+            'status': 'FAILED',
+            'fail_reason': ''
+        }
+
+        if trail.get('is_multi_region_trail'):
+            report.update({'status': 'PASS'})
+        else:
+            report.update({'fail_reason': 'Cloud Trail Multi Region setting must be enabled.'})
+
+        return report
+
+    @staticmethod
+    def check_log_file_validation(trail):
+        report = {
+            'name': 'Log file Validation Enabled',
+            'status': 'FAILED',
+            'fail_reason': ''
+        }
+
+        if trail.get('log_file_validation_enabled'):
+            report.update({'status': 'PASS'})
+        else:
+            report.update({'fail_reason': 'Log file validation setting must be enabled.'})
+
+        return report
+
+    @staticmethod
+    def check_s3_bucket_access(trail):
+        report = {
+            'name': 'S3 Bucket Access',
+            'status': 'FAILED',
+            'fail_reason': ''
+        }
+
+        if trail.get('s3_bucket_public') is False:
+            report.update({'status': 'PASS'})
+        else:
+            report.update({'fail_reason': 'S3 Bucket of Cloud Trail must be blocked public access.'})
+
+        return report
+
+    @staticmethod
+    def check_s3_bucket_mfa_delete(trail):
+        report = {
+            'name': 'S3 Bucket MFA Delete Enabled',
+            'status': 'FAILED',
+            'fail_reason': ''
+        }
+
+        if trail.get('s3_bucket_mfa_delete'):
+            report.update({'status': 'PASS'})
+        else:
+            report.update({'fail_reason': 'S3 Bucket of Cloud Trail must be MFA delete enabled.'})
+
+        return report
+
+    @staticmethod
+    def check_s3_bucket_encryption(trail):
+        report = {
+            'name': 'S3 Bucket SSE (Server-Side Encryption)',
+            'status': 'FAILED',
+            'fail_reason': ''
+        }
+
+        if trail.get('s3_bucket_encryption'):
+            report.update({'status': 'PASS'})
+        else:
+            report.update({'fail_reason': 'S3 Bucket of Cloud Trail must be enable SSE(Server-Side Encryption).'})
+
+        return report
+

@@ -1,7 +1,5 @@
 import os
-from spaceone.inventory.libs.utils import *
-from spaceone.inventory.libs.schema.metadata.dynamic_widget import CardWidget, ChartWidget
-from spaceone.inventory.libs.schema.metadata.dynamic_field import TextDyField, SearchField
+from spaceone.inventory.libs.schema.metadata.dynamic_field import TextDyField, SearchField, EnumDyField
 from spaceone.inventory.libs.schema.cloud_service_type import CloudServiceTypeResource, CloudServiceTypeResponse, \
     CloudServiceTypeMeta
 
@@ -24,6 +22,10 @@ cst_trail.tags = {
 
 cst_trail._metadata = CloudServiceTypeMeta.set_meta(
     fields=[
+        EnumDyField.data_source('Status', 'data.status', default_badge={
+            'indigo.500': ['PASS'],
+            'coral.600': ['FAILED']
+        }),
         TextDyField.data_source('Home Region', 'data.home_region'),
         TextDyField.data_source('Multi-Region Trail', 'data.is_multi_region_trail'),
         TextDyField.data_source('S3 Bucket', 'data.s3_bucket_name'),
