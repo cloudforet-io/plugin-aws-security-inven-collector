@@ -1,13 +1,15 @@
 import os
+from spaceone.inventory.libs.utils import get_data_from_yaml
+from spaceone.inventory.libs.schema.metadata.dynamic_widget import CardWidget, ChartWidget
 from spaceone.inventory.libs.schema.metadata.dynamic_field import TextDyField, SearchField, EnumDyField
 from spaceone.inventory.libs.schema.cloud_service_type import CloudServiceTypeResource, CloudServiceTypeResponse, \
     CloudServiceTypeMeta
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 
-"""
-Trail
-"""
+total_count_conf = os.path.join(current_dir, 'widget/total_count.yaml')
+failed_count_conf = os.path.join(current_dir, 'widget/failed_count.yaml')
+
 cst_trail = CloudServiceTypeResource()
 cst_trail.name = 'EventLogging'
 cst_trail.group = 'Compliance'
@@ -24,7 +26,7 @@ cst_trail._metadata = CloudServiceTypeMeta.set_meta(
     fields=[
         EnumDyField.data_source('Status', 'data.status', default_badge={
             'indigo.500': ['PASS'],
-            'coral.600': ['FAILED']
+            'coral.500': ['FAILED']
         }),
         TextDyField.data_source('Home Region', 'data.home_region'),
         TextDyField.data_source('Multi-Region Trail', 'data.is_multi_region_trail'),
@@ -59,10 +61,20 @@ cst_trail._metadata = CloudServiceTypeMeta.set_meta(
     ],
     search=[
         SearchField.set(name='ARN', key='data.trail_arn'),
+        SearchField.set(name='Status', key='data.status'),
         SearchField.set(name='Home Region', key='data.home_region'),
         SearchField.set(name='Multi-Region Trail', key='data.is_multi_region_trail', data_type='boolean'),
         SearchField.set(name='S3 Bucket', key='data.s3_bucket_name'),
+        SearchField.set(name='Log file Validation Enabled', key='data.log_file_validation_enabled',
+                        data_type='boolean'),
+        SearchField.set(name='S3 Bucket Public', key='data.s3_bucket_public', data_type='boolean'),
+        SearchField.set(name='S3 Bucket MFA Delete Enabled', key='data.s3_bucket_mfa_delete', data_type='boolean'),
+        SearchField.set(name='S3 Bucket Encryption', key='data.s3_bucket_encryption', data_type='boolean'),
         SearchField.set(name='AWS Account ID', key='account')
+    ],
+    widget=[
+        CardWidget.set(**get_data_from_yaml(total_count_conf)),
+        CardWidget.set(**get_data_from_yaml(failed_count_conf))
     ]
 )
 
