@@ -11,7 +11,7 @@ iam_cred_info_meta = ItemDynamicLayout.set_fields('IAM User', fields=[
     TextDyField.data_source('Name', 'name'),
     EnumDyField.data_source('Status', 'data.status', default_badge={
         'indigo.500': ['PASS'],
-        'coral.600': ['FAILED']
+        'coral.500': ['FAILED']
     }),
     TextDyField.data_source('User ARN', 'data.arn'),
     DateTimeDyField.data_source('User Created', 'data.user_creation_time'),
@@ -41,7 +41,7 @@ iam_cred_info_meta = ItemDynamicLayout.set_fields('IAM User', fields=[
 compliance_rules_meta = TableDynamicLayout.set_fields('Rules', 'data.rules', fields=[
     TextDyField.data_source('Rule Name', 'name'),
     EnumDyField.data_source('Status', 'status', default_badge={
-        'indigo.500': ['PASS'], 'coral.600': ['FAILED']
+        'indigo.500': ['PASS'], 'coral.500': ['FAILED']
     }),
     TextDyField.data_source('Fail Reason', 'fail_reason')
 ])

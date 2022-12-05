@@ -12,22 +12,22 @@ meta_base = ItemDynamicLayout.set_fields('Trails', fields=[
     TextDyField.data_source('Trail ARN', 'data.trail_arn'),
     TextDyField.data_source('Home Region', 'data.home_region'),
     EnumDyField.data_source('Multi-Region Trail', 'data.is_multi_region_trail', default_badge={
-        'indigo.500': ['true'], 'coral.600': ['false']
+        'indigo.500': ['true'], 'coral.500': ['false']
     }),
     EnumDyField.data_source('Log file Validation Enabled', 'data.log_file_validation_enabled', default_badge={
-        'indigo.500': ['true'], 'coral.600': ['false']
+        'indigo.500': ['true'], 'coral.500': ['false']
     }),
     TextDyField.data_source('KMS Key ID', 'data.kms_key_id'),
     TextDyField.data_source('S3 Bucket', 'data.s3_bucket_name'),
     TextDyField.data_source('S3 Key Prefix', 'data.s3_key_prefix'),
     EnumDyField.data_source('S3 Bucket Public', 'data.s3_bucket_public', default_badge={
-        'indigo.500': ['true'], 'coral.600': ['false']
+        'indigo.500': ['true'], 'coral.500': ['false']
     }),
     EnumDyField.data_source('S3 Bucket MFA Delete Enabled', 'data.s3_bucket_mfa_delete', default_badge={
-        'indigo.500': ['true'], 'coral.600': ['false']
+        'indigo.500': ['true'], 'coral.500': ['false']
     }),
     EnumDyField.data_source('S3 Bucket Encryption', 'data.s3_bucket_encryption', default_badge={
-        'indigo.500': ['true'], 'coral.600': ['false']
+        'indigo.500': ['true'], 'coral.500': ['false']
     }),
     TextDyField.data_source('SNS Topic', 'data.sns_topic_name'),
     TextDyField.data_source('SNS Topic ARN', 'data.sns_topic_arn'),
@@ -41,7 +41,7 @@ meta_base = ItemDynamicLayout.set_fields('Trails', fields=[
 compliance_rules_meta = TableDynamicLayout.set_fields('Rules', 'data.rules', fields=[
     TextDyField.data_source('Rule Name', 'name'),
     EnumDyField.data_source('Status', 'status', default_badge={
-        'indigo.500': ['PASS'], 'coral.600': ['FAILED']
+        'indigo.500': ['PASS'], 'coral.500': ['FAILED']
     }),
     TextDyField.data_source('Fail Reason', 'fail_reason')
 ])
