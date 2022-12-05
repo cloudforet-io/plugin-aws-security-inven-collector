@@ -4,14 +4,12 @@ cloud_service_type: UserSecurity
 name: Failed Count
 query:
   aggregate:
-    - group:
-        fields:
-          - name: value
-            operator: count
-            conditions:
-              - key: data.status
-                value: FAILED
-                operator: eq
+    - count:
+        name: value
+  filter:
+    - key: data.status
+      value: FAILED
+      operator: eq
 options:
   value_options:
     key: value
