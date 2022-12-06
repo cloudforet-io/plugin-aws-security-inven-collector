@@ -140,10 +140,10 @@ class CloudTrailManager(AWSManager):
             'fail_reason': ''
         }
 
-        if trail.get('s3_bucket_public') is False:
-            report.update({'status': 'PASS'})
-        else:
+        if trail.get('s3_bucket_public'):
             report.update({'fail_reason': 'S3 Bucket of Cloud Trail must be blocked public access.'})
+        else:
+            report.update({'status': 'PASS'})
 
         return report
 
