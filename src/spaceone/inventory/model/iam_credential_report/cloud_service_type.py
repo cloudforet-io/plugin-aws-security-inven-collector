@@ -24,8 +24,6 @@ cst_iam_cred.tags = {
 
 cst_iam_cred._metadata = CloudServiceTypeMeta.set_meta(
     fields=[
-        TextDyField.data_source('ARN', 'data.arn'),
-        DateTimeDyField.data_source('User Created', 'data.user_creation_time'),
         EnumDyField.data_source('Status', 'data.status', default_badge={
             'indigo.500': ['PASS'],
             'coral.500': ['FAILED']
@@ -34,6 +32,9 @@ cst_iam_cred._metadata = CloudServiceTypeMeta.set_meta(
         TextDyField.data_source('MFA Active', 'data.mfa_active'),
         TextDyField.data_source('Access Key 1 Active', 'data.access_key_1_active'),
         TextDyField.data_source('Access Key 2 Active', 'data.access_key_2_active'),
+        TextDyField.data_source('ARN', 'data.arn', options={
+            'is_optional': True
+        }),
         DateTimeDyField.data_source('Password Last Used', 'data.password_last_used', options={
             'is_optional': True
         }),
@@ -83,6 +84,9 @@ cst_iam_cred._metadata = CloudServiceTypeMeta.set_meta(
             'is_optional': True
         }),
         DateTimeDyField.data_source('Cert 2 Last Rotated', 'data.cert_2_last_rotated', options={
+            'is_optional': True
+        }),
+        DateTimeDyField.data_source('User Created', 'data.user_creation_time', options={
             'is_optional': True
         }),
     ],
