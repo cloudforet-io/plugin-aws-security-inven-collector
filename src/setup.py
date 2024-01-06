@@ -16,29 +16,21 @@
 
 from setuptools import setup, find_packages
 
-with open('VERSION', 'r') as f:
+with open("VERSION", "r") as f:
     VERSION = f.read().strip()
     f.close()
 
 setup(
-    name='plugin-aws-security-inven-collector',
+    name="plugin-aws-security-inven-collector",
     version=VERSION,
-    description='AWS Security Inventory collector',
-    long_description='',
-    url='https://www.spaceone.dev/',
-    author='MEGAZONE SpaceONE Team',
-    author_email='admin@spaceone.dev',
-    license='Apache License 2.0',
+    description="AWS Security Inventory collector",
+    long_description="",
+    url="https://www.spaceone.dev/",
+    author="MEGAZONE SpaceONE Team",
+    author_email="admin@spaceone.dev",
+    license="Apache License 2.0",
     packages=find_packages(),
-    install_requires=[
-        'spaceone-core',
-        'spaceone-api',
-        'spaceone-tester',
-        'schematics',
-        'boto3'
-    ],
-    package_data={
-        'spaceone': ['inventory/model/*/widget/*.yaml']
-    },
+    install_requires=["spaceone-api", "schematics", "boto3"],
+    package_data={"spaceone": ["inventory/model/*/widget/*.yaml"]},
     zip_safe=False,
 )
